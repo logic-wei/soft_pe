@@ -51,6 +51,7 @@ void soft_pe_2_0_send_pattern(struct soft_pe *s_pe,enum pe_2_0_pattern  pattern)
 			printk("soft_pe 2.0:don't support this pattern\n");
 	}
 }
+EXPORT_SYMBOL_GPL(soft_pe_2_0_send_pattern);
 
 int soft_pe_thread(void *data)
 {
@@ -75,11 +76,14 @@ struct soft_pe * soft_pe_register(struct soft_pe_driver *driver)
 		return (struct soft_pe *)-ENOMEM;
 	return s_pe;
 }
+EXPORT_SYMBOL_GPL(soft_pe_register);
+
 void soft_pe_unregister(struct soft_pe *s_pe)
 {
 	printk("soft_pe:unregister\n");
 	kfree(s_pe);
 }
+EXPORT_SYMBOL_GPL(soft_pe_unregister);
 
 static int __init soft_pe_init(void)
 {
