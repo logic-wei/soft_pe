@@ -1,5 +1,9 @@
-#include <linux/soft_pe.h>
+#include <soft_pe.h>
 
+#define debug_printf(fmt,...) 					\
+	do{							\
+		printk("soft_pe:"fmt,##__VA_ARGS__);		\
+	}while(0)
 
 void soft_pe_set_input_current(struct soft_pe *s_pe,long int current_ma)
 {
@@ -48,7 +52,7 @@ void soft_pe_2_0_send_pattern(struct soft_pe *s_pe,enum pe_2_0_pattern  pattern)
 			}
 		break;
 		default:
-			printk("soft_pe 2.0:don't support this pattern\n");
+			debug_printf("soft_pe 2.0:don't support this pattern\n");
 	}
 }
 EXPORT_SYMBOL_GPL(soft_pe_2_0_send_pattern);
@@ -56,7 +60,7 @@ EXPORT_SYMBOL_GPL(soft_pe_2_0_send_pattern);
 int soft_pe_thread(void *data)
 {
 	while(1){
-		printk("soft_pe:test\n");
+		debug_printf("test\n");
 		msleep(2000);
 	}
 }
@@ -64,7 +68,7 @@ int soft_pe_thread(void *data)
 struct soft_pe * soft_pe_register(struct soft_pe_driver *driver)
 {
 	struct soft_pe *s_pe;
-	printk("soft_pe:register\n");
+	debug_printf("register\n");
 	//alloc memery
 	s_pe = kzalloc(sizeof(struct soft_pe), GFP_KERNEL);
 	if (!s_pe)
@@ -80,7 +84,7 @@ EXPORT_SYMBOL_GPL(soft_pe_register);
 
 void soft_pe_unregister(struct soft_pe *s_pe)
 {
-	printk("soft_pe:unregister\n");
+	debug_printf("unregister\n");
 	kfree(s_pe);
 }
 EXPORT_SYMBOL_GPL(soft_pe_unregister);
